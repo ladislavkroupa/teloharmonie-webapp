@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { getDb } from "../db/database";
 import { Database } from "sqlite";
 
@@ -6,6 +7,12 @@ const app = express();
 const PORT = 3001;
 
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
 
 app.get("/", (_req, res) => {
   res.send("API běží");
