@@ -1,12 +1,16 @@
 import express from "express";
 import cors from "cors";
+import mogran from "morgan";
 import { getDb } from "../db/database";
 import { Database } from "sqlite";
+import morgan from "morgan";
 
 const app = express();
 const PORT = 3001;
 
 app.use(express.json());
+
+app.use(morgan("dev"));
 
 app.use(
   cors({
@@ -19,9 +23,11 @@ app.get("/", (_req, res) => {
 });
 
 app.get("/products", async (_req, res) => {
-  const db = await getDb();
-  const products = await db.all("SELECT * FROM products");
-  res.json(products);
+  setTimeout(async () => {
+    const db = await getDb();
+    const products = await db.all("SELECT * FROM products");
+    res.json(products);
+  }, 10000);
 });
 
 app.post("/products", async (req, res) => {
