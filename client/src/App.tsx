@@ -1,54 +1,54 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-import type { Products } from "./model/model";
+import Header from "./components/Header";
+import Panel from "./components/Panel";
+import Layout from "./components/Layout";
+import SplitPanel from "./components/SplitPanel";
+import Hero from "./pages/Hero";
+import heroVideo from "../src/assets/video/main-hero-video.mp4";
+import AboutMe from "./pages/AboutMe";
 import { useProducts } from "./hooks/useProducts";
+import { useState } from "react";
 
-function App() {
+export const App = () => {
   const { data: products } = useProducts();
 
   const [count, setCount] = useState(0);
 
-  console.log(products);
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <div className="w-full">
-        <ul>
-          {products &&
-            products.map((product) => (
-              <li key={product.id}>
-                <div className="w-full border">
-                  {product.title}
-                  {product.description}
-                  {product.title}
-                </div>
-              </li>
-            ))}
-        </ul>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Layout>
+        <Header />
+        <SplitPanel className="rounded-50 md:px-10">
+          <video
+            src={heroVideo}
+            autoPlay
+            loop
+            muted
+            className="rounded-100 w-full shadow-2xl md:w-11/12"
+          >
+            <source src="video/main-hero-video.mp4" type="video/mp4" />
+          </video>
+          <Hero />
+        </SplitPanel>
+        <Panel>
+          <AboutMe />
+        </Panel>
+        <div className="w-full">
+          <ul>
+            {products &&
+              products.map((product) => (
+                <li key={product.id}>
+                  <div className="w-full border">
+                    {product.title}
+                    {product.description}
+                    {product.title}
+                  </div>
+                </li>
+              ))}
+          </ul>
+        </div>
+      </Layout>
     </>
   );
-}
+};
 
 export default App;
